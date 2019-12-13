@@ -1,8 +1,4 @@
-import {
-  GET_LIST_USER_START,
-  GET_LIST_USER_SUCCESS,
-  GET_LIST_USER_FAILURE,
-} from './type';
+import * as E from './type';
 import { REQUEST_METHODS, API_URL, request } from '../../api';
 
 /**
@@ -34,19 +30,19 @@ function handleFailure(type, error) {
  * ActionCreators that return a function.
  * @returns {Function} the function that will be implement by redux-thunk.
  */
-export function getListUser() {
+export function getCustomers() {
   return (dispatch) => {
     const options = {
       url: API_URL.LIST_USER_URL,
       method: REQUEST_METHODS.GET,
     };
-    dispatch({ type: GET_LIST_USER_START });
+    dispatch({ type: E.GET_CUSTOMERS_START});
     request.doRequest(options)
       .then(data => {
-        dispatch(handleSuccess(GET_LIST_USER_SUCCESS, data));
+        dispatch(handleSuccess(E.GET_CUSTOMERS_SUCCESS, data));
       })
       .catch(error => {
-        dispatch(handleFailure(GET_LIST_USER_FAILURE, error));
+        dispatch(handleFailure(E.GET_CUSTOMERS_FAILURE, error));
       });
   };
 }
