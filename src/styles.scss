@@ -1,0 +1,20 @@
+.modal-customer-export {
+  .modal-content {
+    .form-check {
+      margin: 10px;
+      .form-check-input {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+      .form-check-label {
+        margin-left: 30px;
+        line-height: 2.5;
+      }
+    }
+    .btn {
+      margin: 10px;
+      float: right;
+    }
+  }
+}
