@@ -1,0 +1,13 @@
+.data-table-component {
+  .search-element {
+    float: right;
+    .custome-search-field {
+      width: 400px;
+      &:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: #cccccc;
+      }
+    }
+  }
+}

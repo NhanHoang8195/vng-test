@@ -1,5 +1,8 @@
-export const SELECT = 'select';
-export const INPUT = 'input';
+export const ELEMENT_TYPE = {
+  SELECT: 'select',
+  INPUT: 'input',
+  NONE_DISPLAY: 'none',
+};
 export const CUSTOMER_TYPE_OPTIONS = [
   {key: 'A', value: 'Khách hàng VIP'},
   {key: 'B', value: 'Khách hàng thân thiết'},
@@ -11,3 +14,7 @@ export const GENDER_OPTIONS = [
   {key: '1', value: 'Female'},
 ];
 
+export const USER_ACTION = {
+  EDIT: 'EDIT',
+  ADD: 'ADD',
+};

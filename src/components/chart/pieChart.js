@@ -54,20 +54,36 @@ function PieChart(props) {
   if (data.length < 1) {
     return null;
   }
-  return (<div className="pie-chart">
-    <svg height={HEIGHT} width={WIDTH} viewBox={VIEW_BOX}>
-      {data.map((dt, idx) => {
-        const percent = dt.value / getTotal(data);
-        return (
+  return (<div className="pie-chart-container">
+    <div className="title-pie-chart">
+      Biểu đồ thể hiện sự phân bố của các loại khách hàng.
+    </div>
+    <div className="pie-chart">
+      <svg height={HEIGHT} width={WIDTH} viewBox={VIEW_BOX}>
+        {data.map((dt, idx) => {
+          const percent = dt.value / getTotal(data);
+          return (
             <path
               id={dt.title}
               key={idx}
               d={getPathData(percent)}
               fill={dt.color}
             />
-        );
-      })}
-    </svg>
+          );
+        })}
+      </svg>
+      <div className="note-container">
+        {data.map((dt) => {
+          const percent = (dt.value / getTotal(data) * 100).toFixed(2);
+          return (
+            <div key={dt.title} className="note-item">
+              <div className="note" style={{backgroundColor: dt.color}} />
+              <span>{dt.title}: {percent}%</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   </div>);
 }
 

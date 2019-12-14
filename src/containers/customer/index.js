@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import AddCustomer from './addCustomer';
+import FormCustomer from './formCustomer';
 import * as actions from '../home/actions';
-import { SELECT, INPUT, CUSTOMER_TYPE_OPTIONS, GENDER_OPTIONS } from './constants';
+import { ELEMENT_TYPE, CUSTOMER_TYPE_OPTIONS, GENDER_OPTIONS } from './constants';
 
 import './styles.scss';
 
@@ -14,51 +14,56 @@ import './styles.scss';
  * @returns {object}
  */
 const createInitValue = data => ({
+  customerId: {
+    value: data.customerId,
+    title: 'customer Id',
+    type: ELEMENT_TYPE.NONE_DISPLAY,
+  },
   customerName: {
-    value: data.customerName || '',
+    value: data.customerName,
     title: 'Customer Name',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   customerType: {
     value: data.customerType || 'A',
     title: 'Customer Type',
-    type: SELECT,
+    type: ELEMENT_TYPE.SELECT,
     options: CUSTOMER_TYPE_OPTIONS,
   },
   balance: {
-    value: data.balance || '',
+    value: data.balance,
     title: 'Balance',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   phone: {
-    value: data.phone || '',
+    value: data.phone,
     title: 'Phone',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   email: {
-    value: data.customerType || '',
+    value: data.email,
     title: 'Email',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   address: {
-    value: data.address || '',
+    value: data.address,
     title: 'Address',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   status: {
-    value: data.status || '',
+    value: data.status,
     title: 'Status',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   accountNumber: {
-    value: data.accountNumber || '',
+    value: data.accountNumber,
     title: 'Account Number',
-    type: INPUT,
+    type: ELEMENT_TYPE.INPUT,
   },
   gender: {
     value: data.gender || '0',
     title: 'Gender',
-    type: SELECT,
+    type: ELEMENT_TYPE.SELECT,
     options: GENDER_OPTIONS,
   }
 });
@@ -88,7 +93,7 @@ function handleData(data = {}) {
 }
 
 function Customer(props) {
-  const customer = useFormInput(props.value);
+  const customer = useFormInput(props.value || {});
   function saveCustomer() {
     const rawData = customer.formValue;
     const data = handleData(rawData);
@@ -97,7 +102,7 @@ function Customer(props) {
     });
   }
   return (<div className="customer-container">
-    <AddCustomer {...customer} className="add-customer" />
+    <FormCustomer {...customer} className="add-customer" />
     <div className="customer-list-btn">
       <button onClick={saveCustomer} className="btn btn-primary customer-save-btn">Save</button>
       <button onClick={props.history.goBack} className="btn btn-secondary customer-save-btn">Cancel</button>
@@ -116,8 +121,7 @@ Customer.defaultProps = {
   value: {}
 };
 const mapStateToProps = state => ({
-  data: state.homeReducer.get('data'),
-  requesting: state.homeReducer.get('requesting'),
+  value: state.homeReducer.get('editingCustomer'),
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions , dispatch),

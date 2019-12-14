@@ -7,28 +7,39 @@
   "email": "a@gmail.com",
   "address": "HCM",
   "status": 1,
-  "accountNumber": 0,
+  "accountNumber": 1,
   "gender": 0
 }, {
   "customerId": 1,
   "customerName": "Nguyễn Văn B",
   "customerType": "B",
-  "balance": 100,
-  "phone": "223456",
+  "balance": 200,
+  "phone": "123456",
   "email": "b@gmail.com",
   "address": "HCM",
-  "status": 1,
-  "accountNumber": 0,
+  "status": 2,
+  "accountNumber": 2,
   "gender": 0
 }, {
   "customerId": 2,
   "customerName": "Nguyễn Văn C",
-  "customerType": "B",
-  "balance": 100,
-  "phone": "123456",
-  "email": "b@gmail.com",
+  "customerType": "C",
+  "balance": 300,
+  "phone": "1234567",
+  "email": "c@gmail.com",
   "address": "HCM",
-  "status": 1,
-  "accountNumber": 0,
-  "gender": 0
+  "status": 3,
+  "accountNumber": 3,
+  "gender": 1
+}, {
+  "customerId": 3,
+  "customerName": "Nguyễn Văn D",
+  "customerType": "D",
+  "balance": 400,
+  "phone": "12345678",
+  "email": "d@gmail.com",
+  "address": "HCM",
+  "status": 4,
+  "accountNumber": 4,
+  "gender": 1
 }]

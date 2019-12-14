@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import BootstrapTable from 'react-bootstrap-table-next';
+// import BootstrapTable from 'react-bootstrap-table-next';\
+import DataTable from '../../components/dataTable';
 import * as actions from './actions';
 import { PieChart } from '../../components/chart';
 import { generateDataForPieChart } from '../../utils';
@@ -65,7 +66,7 @@ function getColumns(onEdit, onDelete) {
     {
       dataField: "edit",
       text: "#",
-      formatter: (cell, row) => <button className="btn btn-primary" onClick={() => onEdit(`customer/edit?id=${row.customerId}`)}>Edit</button>
+      formatter: (cell, row) => <button className="btn btn-primary" onClick={() => onEdit(row.customerId)}>Edit</button>
     },
     {
       dataField: "delete",
@@ -77,22 +78,30 @@ function getColumns(onEdit, onDelete) {
 
 function Homepage(props) {
   const { data, requesting } = props;
+  function onGoToUpdatePage(id) {
+    if (id !== undefined) {
+      props.actions.saveCustomerToEdit(id);
+      props.history.push(`customer/edit?id=${id}`);
+    } else {
+      props.actions.clearCustomerEdited();
+      props.history.push('customer/add');
+    }
+  }
   return (
     <div className='home-containers'>
-      <header className="header-home-container"><h1>List Customers</h1></header>
+      <header className="header-home-container"><h1>View Customers</h1></header>
       <PieChart
         data={generateDataForPieChart(data)}
       />
-      { !requesting && <BootstrapTable
-        keyField="customerId"
-        data={data || []}
-        columns={getColumns(props.history.push, props.actions.deleteCustomer)}
-        noDataIndication={() => 'No data to display'}
-        headerClasses="react-table-header-custome"
-      />}
+        { !requesting && <DataTable
+          keyField="customerId"
+          data={data || []}
+          search
+          columns={getColumns(onGoToUpdatePage, props.actions.deleteCustomer)}
+        />}
       <footer className="footer-home-container">
-        <button className="btn btn-primary" onClick={() => props.history.push('/customer/add')}>Add new customer</button>
-        <button className="btn btn-success">Export customer</button>
+        <button className="btn btn-primary" onClick={() => onGoToUpdatePage()}>Add new customer</button>
+        <button className="btn btn-success">Export CSV customer</button>
       </footer>
     </div>
   );
@@ -101,6 +110,8 @@ Homepage.propTypes = {
   actions: PropTypes.shape({
     getCustomers: PropTypes.func,
     deleteCustomer: PropTypes.func,
+    saveCustomerToEdit: PropTypes.func,
+    clearCustomerEdited: PropTypes.func,
   }),
   data: PropTypes.arrayOf(PropTypes.shape({})),
   requesting: PropTypes.bool,

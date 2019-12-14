@@ -20,12 +20,26 @@ export function generateDataForPieChart(data) {
         value: typeB.value + 1,
         color: "#00ff00",
       };
+    } else if (val.customerType === Constants.CUSTOMER_TYPE_C) {
+      const typeC = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_C) || { value: 0 };
+      dt = {
+        title: Constants.CUSTOMER_TYPE_C,
+        value: typeC.value + 1,
+        color: "#5232ff",
+      };
+    } else if (val.customerType === Constants.CUSTOMER_TYPE_D) {
+      const typeD = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_D) || { value: 0 };
+      dt = {
+        title: Constants.CUSTOMER_TYPE_D,
+        value: typeD.value + 1,
+        color: "#ad98ff",
+      };
     } else {
       const others = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_OTHERS) || { value: 0 };
       dt = {
         title: Constants.CUSTOMER_TYPE_OTHERS,
         value: others.value + 1,
-        color: "#0000ff",
+        color: "#000000",
       };
     }
     const resultIgnore = acc.filter(a => a.title !== dt.title);
