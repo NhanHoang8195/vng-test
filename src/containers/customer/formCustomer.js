@@ -14,7 +14,7 @@ function getElement(data, key, onChange) {
     return (<>
       <label>{data.title}</label>
       <select value={data.value} onChange={(e) => onChange(key, e.target.value)} className="form-control">
-        {data.options.map(dt => <option value={dt.key}>{dt.value}</option>)}
+        {data.options.map(dt => <option key={dt.key} value={dt.key}>{dt.value}</option>)}
       </select>
     </>);
   } else if (data.type === ELEMENT_TYPE.NONE_DISPLAY) {

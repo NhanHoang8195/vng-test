@@ -14,33 +14,39 @@ function getColumns(onEdit, onDelete) {
   return [
     {
       dataField: "customerId",
-      text: "Customer Id",
+      text: "Id",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "50px"},
+
     },
     {
       dataField: "customerName",
       text: "Name",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "200px"},
     },
     {
       dataField: "customerType",
       text: "Type",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "70px"},
     },
     {
       dataField: "balance",
       text: "Balance",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "100px"},
     },
     {
       dataField: "phone",
       text: "Phone",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "150px"},
     },
     {
       dataField: "email",
@@ -59,30 +65,35 @@ function getColumns(onEdit, onDelete) {
       text: "Status",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "100px"},
     },
     {
       dataField: "accountNumber",
       text: "Account Number",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "200px"},
     },
     {
       dataField: "gender",
       text: "Gender",
       sort: true,
       csvExport: true,
+      headerStyle: {width: "100px"},
     },
     {
       dataField: "edit",
       text: "#",
       formatter: (cell, row) => <button className="btn btn-primary" onClick={() => onEdit(row.customerId)}>Edit</button>,
       csvExport: false,
+      headerStyle: {width: "100px"},
     },
     {
       dataField: "delete",
       text: "#",
       formatter: (cell, row) => <button onClick={() => onDelete(row.customerId)} className="btn btn-danger">Delete</button>,
       csvExport: false,
+      headerStyle: {width: "100px"},
     }
   ];
 }

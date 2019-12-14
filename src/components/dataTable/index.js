@@ -1,12 +1,49 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
+import jsPDF from "jspdf";
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import { Modal, FormCheck } from 'react-bootstrap';
+import "jspdf-autotable";
 
 import './styles.scss';
 
+
 const { SearchBar } = Search;
+
+/**
+ * Handle data need to export.
+ * @param customers
+ * @returns {*}
+ */
+function getDataExportPDF(customers) {
+  return customers.map(dt => {
+    return Object.keys(dt).map(k => dt[k]);
+  });
+}
+
+
+/**
+ * Handle column header
+ * @param columns
+ * @returns {Array[]}
+ */
+function getHeadersExportPDF(columns) {
+  const head = [];
+  const columnStyles = {};
+  columns.forEach(col => {
+    if (col.csvExport) {
+      head.push(col.text);
+      columnStyles[col.dataField] = col.headerStyle ? col.headerStyle.width: 'auto';
+    }
+  });
+  return {
+    head: [head],
+    columnStyles,
+  };
+}
+
+
 
 function DataTable(props) {
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +68,30 @@ function DataTable(props) {
   function handleExportCSV(tooKitExportProps) {
     tooKitExportProps.onExport();
   }
+  function handleExportPDF() {
+
+    const marginLeft = 40;
+    const doc = new jsPDF("portrait", "pt", "A4");
+    doc.setFontSize(10);
+    const title = "Customer List";
+    const headers = getHeadersExportPDF(updatedColumns);
+
+
+    const dataExported = getDataExportPDF(data);
+
+    let content = {
+      ...headers,
+      startY: 50,
+      // head: headers,
+      body: dataExported,
+      styles: {cellWidth: 'wrap'},
+      // columnStyles: get
+    };
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+
+    doc.save("customers.pdf")
+}
   return (<ToolkitProvider
     keyField={keyField}
     data={data}
@@ -55,7 +116,7 @@ function DataTable(props) {
           />
           <footer className="footer-home-container">
             <button onClick={onAddNewCustomer} className="btn btn-primary">Add new customer</button>
-            <button className="btn btn-success" onClick={() => setShowModal(!showModal)}>Export CSV</button>
+            <button className="btn btn-success" onClick={() => setShowModal(!showModal)}>Export</button>
           </footer>
           <Modal className="modal-customer-export" show={showModal} onHide={() => setShowModal(!showModal)}>
             <Modal.Header>
@@ -67,7 +128,8 @@ function DataTable(props) {
                       <FormCheck key={col.text} type="checkbox" name={col.dataField} label={col.text} checked={col.csvExport} onChange={handleChangeCheckbox} />) : null;
                   })}
                   <button className="btn btn-secondary cancel-export-btn" onClick={() => setShowModal(!showModal)}>Cancel</button>
-                  <button className="btn btn-success export-btn" onClick={() => handleExportCSV({...propsToolKit.csvProps})}>Export</button>
+                  <button className="btn btn-success export-btn" onClick={() => handleExportCSV({...propsToolKit.csvProps})}>Export CSV</button>
+                  <button className="btn btn-danger export-btn" onClick={handleExportPDF}>Export PDF</button>
             </Modal.Body>
           </Modal>
         </div>
