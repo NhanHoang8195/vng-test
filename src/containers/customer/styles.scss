@@ -1,0 +1,43 @@
+.customer-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  select {
+    &:focus {
+      box-shadow: none;
+      border-color: #cccccc;
+    }
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  input {
+    border-radius: 2px;
+    box-shadow: none;
+    width: 440px;
+    border: 1px solid #cccccc;
+    outline: none;
+    padding: 5px 10px;
+    &:focus {
+      outline: none;
+    }
+  }
+  button {
+    width: 90px;
+    margin: 10px;
+    border-radius: 2px;
+  }
+  .customer-list-btn {
+    //text-align: center;
+    float: right
+  }
+  .customer-save-btn {
+    //background-color: ;
+  }
+  .add-customer {
+
+  }
+}

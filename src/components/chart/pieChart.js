@@ -56,17 +56,15 @@ function PieChart(props) {
   }
   return (<div className="pie-chart">
     <svg height={HEIGHT} width={WIDTH} viewBox={VIEW_BOX}>
-      {data.map((dt) => {
+      {data.map((dt, idx) => {
         const percent = dt.value / getTotal(data);
         return (
-          <>
             <path
               id={dt.title}
-              key={dt.title}
+              key={idx}
               d={getPathData(percent)}
               fill={dt.color}
             />
-          </>
         );
       })}
     </svg>

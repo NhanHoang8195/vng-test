@@ -1,0 +1,34 @@
+[{
+  "customerId": 0,
+  "customerName": "Nguyễn Văn A",
+  "customerType": "A",
+  "balance": 100,
+  "phone": "12345",
+  "email": "a@gmail.com",
+  "address": "HCM",
+  "status": 1,
+  "accountNumber": 0,
+  "gender": 0
+}, {
+  "customerId": 1,
+  "customerName": "Nguyễn Văn B",
+  "customerType": "B",
+  "balance": 100,
+  "phone": "223456",
+  "email": "b@gmail.com",
+  "address": "HCM",
+  "status": 1,
+  "accountNumber": 0,
+  "gender": 0
+}, {
+  "customerId": 2,
+  "customerName": "Nguyễn Văn C",
+  "customerType": "B",
+  "balance": 100,
+  "phone": "123456",
+  "email": "b@gmail.com",
+  "address": "HCM",
+  "status": 1,
+  "accountNumber": 0,
+  "gender": 0
+}]

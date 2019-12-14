@@ -1,5 +1,4 @@
 import * as E from './type';
-import { REQUEST_METHODS, API_URL, request } from '../../api';
 
 /**
  * Handle action get data successfully.
@@ -26,23 +25,16 @@ function handleFailure(type, error) {
   };
 }
 
-/**
- * ActionCreators that return a function.
- * @returns {Function} the function that will be implement by redux-thunk.
- */
-export function getCustomers() {
-  return (dispatch) => {
-    const options = {
-      url: API_URL.LIST_USER_URL,
-      method: REQUEST_METHODS.GET,
-    };
-    dispatch({ type: E.GET_CUSTOMERS_START});
-    request.doRequest(options)
-      .then(data => {
-        dispatch(handleSuccess(E.GET_CUSTOMERS_SUCCESS, data));
-      })
-      .catch(error => {
-        dispatch(handleFailure(E.GET_CUSTOMERS_FAILURE, error));
-      });
+export function addCustomer(data) {
+  return async (dispatch) => {
+    dispatch({ type: E.ADD_CUSTOMER_START});
+    dispatch(handleSuccess(E.ADD_CUSTOMER_SUCCESS, data));
+  };
+}
+
+export function deleteCustomer(id) {
+  return async (dispatch) => {
+    dispatch({ type: E.DELETE_CUSTOMER_START});
+    dispatch(handleSuccess(E.DELETE_CUSTOMER_SUCCESS, id));
   };
 }

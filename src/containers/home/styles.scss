@@ -1,3 +1,18 @@
 .home-containers {
   padding: 0 20px;
+  header {
+    text-align: center;
+  }
+  .react-table-header-custome {
+    > th {
+      padding: 10px;
+      line-height: 1.5;
+    }
+  }
+  footer {
+    float: right;
+    .btn {
+      margin: 5px;
+    }
+  }
 }

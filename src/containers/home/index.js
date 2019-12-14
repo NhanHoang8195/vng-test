@@ -5,120 +5,102 @@ import { connect } from 'react-redux';
 import BootstrapTable from 'react-bootstrap-table-next';
 import * as actions from './actions';
 import { PieChart } from '../../components/chart';
-import * as Constants from '../../constants';
+import { generateDataForPieChart } from '../../utils';
+
 import './styles.scss';
 
 
-function getColumns(history) {
+function getColumns(onEdit, onDelete) {
   return [
     {
       dataField: "customerId",
-      text: "customerId",
-      hidden: true,
-    },
-    {
-      dataField: "",
-      text: "No.",
-      formatter: (cell, row, rowIdx) => (<div>{rowIdx + 1}</div>),
+      text: "Customer Id",
+      sort: true,
     },
     {
       dataField: "customerName",
-      text: "Name"
+      text: "Name",
+      sort: true,
     },
     {
       dataField: "customerType",
-      text: "Type"
+      text: "Type",
+      sort: true,
     },
     {
       dataField: "balance",
-      text: "Balance"
+      text: "Balance",
+      sort: true,
     },
     {
       dataField: "phone",
-      text: "Phone"
+      text: "Phone",
+      sort: true,
     },
     {
       dataField: "email",
-      text: "Email"
+      text: "Email",
+      sort: true,
     },
     {
       dataField: "address",
-      text: "Address"
+      text: "Address",
+      sort: true,
     },
     {
       dataField: "status",
-      text: "Status"
+      text: "Status",
+      sort: true,
     },
     {
       dataField: "accountNumber",
-      text: "Account Number"
+      text: "Account Number",
+      sort: true,
     },
     {
       dataField: "gender",
-      text: "Gender"
+      text: "Gender",
+      sort: true,
     },
     {
-      dataField: "",
+      dataField: "edit",
       text: "#",
-      formatter: (cell, row) => <button onClick={() => history.push(`${Constants.URL_PATH.EDIT_CUSTOMER}/${row.customerId}`)}>Edit</button>
+      formatter: (cell, row) => <button className="btn btn-primary" onClick={() => onEdit(`customer/edit?id=${row.customerId}`)}>Edit</button>
     },
     {
-      dataField: "",
+      dataField: "delete",
       text: "#",
-      formatter: (cell, row) => <button>Delete</button>
+      formatter: (cell, row) => <button onClick={() => onDelete(row.customerId)} className="btn btn-danger">Delete</button>
     }
   ];
 }
-function generateDataForChart(data) {
-  return data.reduce((acc, val) => {
-    let dt = {};
-    if (val.customerType === Constants.CUSTOMER_TYPE_A) {
-      const typeA = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_A) || { value: 0 };
-      dt = {
-        title: Constants.CUSTOMER_TYPE_A,
-        value: typeA.value + 1,
-        color: "#ff0000",
-      };
-    } else if (val.customerType === Constants.CUSTOMER_TYPE_B) {
-      const typeB = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_B) || { value: 0 };
-      dt = {
-        title: Constants.CUSTOMER_TYPE_B,
-        value: typeB.value + 1,
-        color: "#00ff00",
-      };
-    } else {
-      const others = acc.find(obj => obj.title === Constants.CUSTOMER_TYPE_OTHERS) || { value: 0 };
-      dt = {
-        title: Constants.CUSTOMER_TYPE_OTHERS,
-        value: others.value + 1,
-        color: "#00ff00",
-      };
-    }
-    return [...acc, dt];
-  }, []);
-}
-const colorCharts = ["red", "blue", "green"];
 
 function Homepage(props) {
-  const { data, requesting, history } = props;
+  const { data, requesting } = props;
   return (
     <div className='home-containers'>
-      <header>List Customers</header>
+      <header className="header-home-container"><h1>List Customers</h1></header>
       <PieChart
-        data={generateDataForChart(data)}
-        colors={colorCharts}
+        data={generateDataForPieChart(data)}
       />
-      <BootstrapTable
-        keyField="id"
-        data={data}
-        columns={getColumns(history)}
-      />
+      { !requesting && <BootstrapTable
+        keyField="customerId"
+        data={data || []}
+        columns={getColumns(props.history.push, props.actions.deleteCustomer)}
+        noDataIndication={() => 'No data to display'}
+        headerClasses="react-table-header-custome"
+      />}
+      <footer className="footer-home-container">
+        <button className="btn btn-primary" onClick={() => props.history.push('/customer/add')}>Add new customer</button>
+        <button className="btn btn-success">Export customer</button>
+      </footer>
     </div>
   );
 }
 Homepage.propTypes = {
   actions: PropTypes.shape({
     getCustomers: PropTypes.func,
+    deleteCustomer: PropTypes.func,
   }),
   data: PropTypes.arrayOf(PropTypes.shape({})),
   requesting: PropTypes.bool,
