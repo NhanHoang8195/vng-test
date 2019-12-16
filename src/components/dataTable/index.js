@@ -115,7 +115,7 @@ function DataTable(props) {
             headerClasses="react-table-header-custome"
           />
           <footer className="footer-home-container">
-            <button onClick={onAddNewCustomer} className="btn btn-primary">Add new customer</button>
+            <button onClick={() => onAddNewCustomer()} className="btn btn-primary">Add new customer</button>
             <button className="btn btn-success" onClick={() => setShowModal(!showModal)}>Export</button>
           </footer>
           <Modal className="modal-customer-export" show={showModal} onHide={() => setShowModal(!showModal)}>
